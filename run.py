@@ -25,15 +25,15 @@ CORS(app)
 app.route('/api/productos/', methods=['GET'])(get_todos_productos)    # get_todos_productos es la funcion definida en views.py
 app.route('/api/productos/<int:id_product>', methods=['GET'])(get_producto)   # ruta hasta funciones en views.py
 app.route('/api/productos/', methods=['POST'])(create_producto)
-app.route('api/productos/<int:id_product>', methods=['PUT'])(update_producto)   # ruta hasta funciones en views.py
-app.route('api/productos/<int:id_product>', methods=['DELETE'])(delete_producto)  # ruta hasta funciones en views.py
+app.route('/api/productos/<int:id_product>', methods=['PUT'])(update_producto)   # ruta hasta funciones en views.py
+app.route('/api/productos/<int:id_product>', methods=['DELETE'])(delete_producto)  # ruta hasta funciones en views.py
 
 
 
 # ACA VAN LOS METODOS PARA BORRAR, EDITAR, CONSULTAR, ETC
 
 # servidor de desarrollo
-
+ 
 
 
 # permite separar el codigo que se ejecuta cuando se corre el archivo
