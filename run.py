@@ -1,11 +1,9 @@
-# aca pongo la ruta que quiero que atienda que archivo
-
 from flask import Flask
 from app.database import init_app
 from app.views import *    #index, saludar   importo la funcion index desde el archivo views y la funcion saludar
 from flask_cors import CORS
 
-
+# aca puse las rutas que quiero que atienda a que archivo
 
 # voy a crear una instancia de Flask, que es la clase que importe primero
 

@@ -24,7 +24,7 @@ class Producto:
     def get_by_id(id_product):
         db = get_db()
         cursor = db.cursor()
-        cursor.execute("SELECT * FROM producto WHERE id_producto = %s", (id_product,))
+        cursor.execute("SELECT * FROM productos WHERE id_product = %s", (id_product,))
         row = cursor.fetchone()
         cursor.close()
         if row:   # si encuentra algo, realiza el proceso de convercion a un formato que me  sirva para luego enviarlo como json en views.py: get_todos_productos()
@@ -51,7 +51,7 @@ class Producto:
         cursor = db.cursor()  # objeto que me permite ejecutar querys
         if self.id_product:   # si existe un id con un valor asignado
             query = """
-                UPDATE producto SET category = %s, name = %s, price = %s, image = %s
+                UPDATE productos SET category = %s, name = %s, price = %s, image = %s
                 WHERE id_product = %s
             """, (self.category, self.name, self.price, self.image, self.id_product)
             cursor.execute(query)
