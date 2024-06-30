@@ -10,7 +10,7 @@ from flask_cors import CORS
 app = Flask(__name__)  # __name__ es una variable especial de python 
 
 init_app(app)  # para que se ejecute la funcion que inicializa el uso de la aplicacion de la base de datos
-
+ 
 # habilitamos que acepte solicitudes de cualquier origen, jamas hacer en ambito de produccion
 CORS(app)
 
@@ -23,7 +23,7 @@ CORS(app)
 # app.route('/',methods=['GET'])(index)
 
 app.route('/api/productos/', methods=['GET'])(get_todos_productos)    # get_todos_productos es la funcion definida en views.py
-app.route('api/productos/<int:id_product>', methods=['GET'])(get_producto)   # ruta hasta funciones en views.py
+app.route('/api/productos/<int:id_product>', methods=['GET'])(get_producto)   # ruta hasta funciones en views.py
 app.route('/api/productos/', methods=['POST'])(create_producto)
 app.route('api/productos/<int:id_product>', methods=['PUT'])(update_producto)   # ruta hasta funciones en views.py
 app.route('api/productos/<int:id_product>', methods=['DELETE'])(delete_producto)  # ruta hasta funciones en views.py

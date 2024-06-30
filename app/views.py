@@ -34,7 +34,7 @@ def get_producto(id_product):
 
 # funcion para crear los productos
 def create_producto():
-    data = request.json # request recibio los datos del cliente en formato json y los guardo en la variable 
+    data = request.json # request (esta en el from arriba) recibio los datos del cliente en formato json y los guardo en la variable 
     # necesitamos agregar validaciones
     new_producto = Producto(None,data['category'],data['name'],data['price'],data['image'])  # llamo al constructor de la clase Producto y completo  los parametros con los valores que estoy recibiendo de la solicitud request.json
     new_producto.guardar_base() # llamo a ejecutar el metodo guardar_base() de models.py

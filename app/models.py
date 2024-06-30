@@ -25,7 +25,7 @@ class Producto:
         db = get_db()
         cursor = db.cursor()
         cursor.execute("SELECT * FROM productos WHERE id_product = %s", (id_product,))
-        row = cursor.fetchone()
+        row = cursor.fetchone()  # con el cursor recupero una que cumple
         cursor.close()
         if row:   # si encuentra algo, realiza el proceso de convercion a un formato que me  sirva para luego enviarlo como json en views.py: get_todos_productos()
             return Producto(id_product=row[0], category=row[1], name=row[2], price=row[3], image=row[4])
@@ -36,7 +36,7 @@ class Producto:
     def get_todo_prod():
         # logica para traer todos los productos SELECT * FROM en la base
         db = get_db() # hace la coneccion a la base de datos
-        cursor = db.cursor()  # permite ejecutar instrucciones de sql y obtener los resultados en un formato especifico dentro de flask
+        cursor = db.cursor()  # permite ejecutar instrucciones de sql y OBTENER LOS RESULTADOS (CAPTURARLOS) en un formato especifico dentro de flask
         cursor.execute("SELECT * FROM productos")  # en su caso era movies, es el productos del nombre de mi tabla de la base
         rows = cursor.fetchall()  # la consulta devuelve una lista, pero en formato tupla de todos los resultados. Por tanto hay que pasarlo a diccionario/ o sea permite recuperar los valores que se obtienen de la consulta sql
         lista_producto_obtenido = [Producto(id_product=row[0], category=row[1], name=row[2], price=row[3], image=row[4]) for row in rows]
