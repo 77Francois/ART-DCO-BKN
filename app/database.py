@@ -12,6 +12,7 @@ DATABASE_CONFIG = {
     'host': os.getenv('DB_HOST'),
     'database': os.getenv('DB_NAME'),
     'port': os.getenv('DB_PORT', 3306)  # puerto predeterminado es 3306 si no se especifica
+    
 }
 
 # Función para obtener la conexión a la base de datos

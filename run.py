@@ -20,7 +20,7 @@ CORS(app)
 # app.route('/helloworld',methods=['GET'])(index)  si te llega la ruta '/helloworld', le defino el tipo de metodo http quiero que use 'GET' y entre parentesis (index) que vista quiero que se asocie a la ruta
 # se lee: si a mi servidor le llega la solicitud por medio de la ruta helloworld y que se la solicitud sea del tipo GET, que el backend ejecute el metodo index
 
-# app.route('/',methods=['GET'])(index)
+# app.route('/',methods=['GET'])
 
 app.route('/api/productos/', methods=['GET'])(get_todos_productos)    # get_todos_productos es la funcion definida en views.py
 app.route('/api/productos/<int:id_product>', methods=['GET'])(get_producto)   # ruta hasta funciones en views.py

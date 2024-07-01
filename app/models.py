@@ -50,11 +50,11 @@ class Producto:
         db = get_db()   # optiene la coneccion a la base de datos
         cursor = db.cursor()  # objeto que me permite ejecutar querys
         if self.id_product:   # si existe un id con un valor asignado
-            query = """
+            cursor.execute("""
                 UPDATE productos SET category = %s, name = %s, price = %s, image = %s
                 WHERE id_product = %s
-            """, (self.category, self.name, self.price, self.image, self.id_product)
-            cursor.execute(query)
+            """, (self.category, self.name, self.price, self.image, self.id_product))
+            
         else:
             cursor.execute("""
                 INSERT INTO productos (category, name, price, image) VALUES (%s, %s, %s, %s)
