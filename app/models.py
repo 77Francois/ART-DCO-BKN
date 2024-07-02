@@ -45,32 +45,64 @@ class Producto:
 
 
 
-    def guardar_base(self):
-        # logica para guardar/modificar INSERT/UPDATE en base de datos
-        db = get_db()   # optiene la coneccion a la base de datos
-        cursor = db.cursor()  # objeto que me permite ejecutar querys
-        if self.id_product:   # si existe un id con un valor asignado
-            cursor.execute("""
-                UPDATE productos SET category = %s, name = %s, price = %s, image = %s
-                WHERE id_product = %s
-            """, (self.category, self.name, self.price, self.image, self.id_product))
+    # def guardar_base(self):
+    #     # logica para guardar/modificar INSERT/UPDATE en base de datos
+    #     db = get_db()   # optiene la coneccion a la base de datos
+    #     cursor = db.cursor()  # objeto que me permite ejecutar querys
+    #     if self.id_product:   # si existe un id con un valor asignado
+    #         cursor.execute("""
+    #             UPDATE productos SET category = %s, name = %s, price = %s, image = %s
+    #             WHERE id_product = %s
+    #         """, (self.category, self.name, self.price, self.image, self.id_product))
             
-        else:
-            cursor.execute("""
-                INSERT INTO productos (category, name, price, image) VALUES (%s, %s, %s, %s)
-            """, (self.category, self.name, self.price, self.image))
-            self.id_product = cursor.lastrowid   # cursor me permite traer la ultima PK que fue insertada
-        db.commit()   # confirma para que se guarde
-        cursor.close()
+    #     else:
+    #         cursor.execute("""
+    #             INSERT INTO productos (category, name, price, image) VALUES (%s, %s, %s, %s)
+    #         """, (self.category, self.name, self.price, self.image))
+    #         self.id_product = cursor.lastrowid   # cursor me permite traer la ultima PK que fue insertada
+    #     db.commit()   # confirma para que se guarde
+    #     cursor.close()    cambiado por una funcion con rollback
+
+    def guardar_base(self):
+        try:
+            db = get_db()   # optiene la coneccion a la base de datos
+            cursor = db.cursor()  # objeto que me permite ejecutar querys
+            if self.id_product:   # si existe un id con un valor asignado
+                cursor.execute("""
+                    UPDATE productos SET category = %s, name = %s, price = %s, image = %s
+                    WHERE id_product = %s
+                """, (self.category, self.name, self.price, self.image, self.id_product))
+            else:
+                cursor.execute("""
+                    INSERT INTO productos (category, name, price, image) VALUES (%s, %s, %s, %s)
+                """, (self.category, self.name, self.price, self.image))
+                self.id_product = cursor.lastrowid   # cursor me permite traer la ultima PK que fue insertada
+            db.commit()   # confirma para que se guarde
+        except Exception as e:
+            db.rollback()  # Revertir cualquier cambio en caso de error
+            raise e  # Re-raise the exception to be handled elsewhere
+        finally:
+            cursor.close()
 
     
+    # def delete_producto(self):
+    #     # logica para borrar DELETE de la base de datos
+    #     db = get_db()
+    #     cursor = db.cursor()
+    #     cursor.execute("DELETE FROM productos WHERE id_product = %s", (self.id_product,))
+    #     db.commit()
+    #     cursor.close()   la cambiamos por nuestra version
+
     def delete_producto(self):
-        # logica para borrar DELETE de la base de datos
-        db = get_db()
-        cursor = db.cursor()
-        cursor.execute("DELETE FROM productos WHERE id_product = %s", (self.id_product,))
-        db.commit()
-        cursor.close()
+        try:
+            # lógica para borrar DELETE de la base de datos
+            db = get_db()
+            cursor = db.cursor()
+            cursor.execute("DELETE FROM productos WHERE id_product = %s", (self.id_product,))
+            db.commit()
+            cursor.close()
+        except Exception as e:
+            raise Exception(f"Error al eliminar el producto: {str(e)}")
     
 
 

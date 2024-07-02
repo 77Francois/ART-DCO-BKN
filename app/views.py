@@ -40,19 +40,29 @@ def create_producto():
     new_producto.guardar_base() # llamo a ejecutar el metodo guardar_base() de models.py
     return jsonify({'message':'Producto generado exitosamente'}), 201
 
+# función para crear los productos
+# def create_producto():
+#     try:
+#         data = request.json  # request (está en el from arriba) recibió los datos del cliente en formato json y los guardo en la variable 
 
-# funcion para actualizar productos
-# def update_producto(id_product):
-#     prod = Producto.get_by_id(id_product)
-#     if not prod:
-#         return jsonify({'message': 'Producto inexistente'}), 404
-#     data = request.json
-#     prod.category = data['category']
-#     prod.name = data['name']
-#     prod.price = data['price']
-#     prod.image = data['image']
-#     prod.guardar_base()
-#     return jsonify({'message': 'Producto actualizado'})
+#         # Validaciones básicas
+#         if not all(key in data for key in ('category', 'name', 'price', 'image')):
+#             return jsonify({'message': 'Faltan datos necesarios'}), 400
+
+#         if not isinstance(data['price'], (int, float)):
+#             return jsonify({'message': 'El precio debe ser un número'}), 400
+
+#         new_producto = Producto(None, data['category'], data['name'], data['price'], data['image'])  # llamo al constructor de la clase Producto y completo los parámetros con los valores que estoy recibiendo de la solicitud request.json
+#         new_producto.guardar_base()  # llamo a ejecutar el método guardar_base() de models.py
+
+#         return jsonify({'message': 'Producto generado exitosamente', 'product': new_producto.serialize()}), 201
+
+#     except Exception as e:
+#         return jsonify({'message': 'Error al crear el producto', 'error': str(e)}), 500
+
+
+
+
 
 
 
@@ -71,11 +81,21 @@ def update_producto(id_product):
 
 
 # funcion para borrar un producto
+# def delete_producto(id_product):
+#     prod = Producto.get_by_id(id_product)
+#     if not prod:
+#         return jsonify({'message': 'Producto inexistente'}), 404
+#     prod.delete_producto()
+#     return jsonify({'message': 'Producto eliminado'})  se cambio por nuestro codigo
+
 def delete_producto(id_product):
-    prod = Producto.get_by_id(id_product)
-    if not prod:
-        return jsonify({'message': 'Producto inexistente'}), 404
-    prod.delete_producto()
-    return jsonify({'message': 'Producto eliminado'})
+    try:
+        prod = Producto.get_by_id(id_product)
+        if not prod:
+            return jsonify({'message': 'Producto inexistente'}), 404
+        prod.delete_producto()
+        return jsonify({'message': 'Producto eliminado exitosamente', 'id_product': id_product})
+    except Exception as e:
+        return jsonify({'message': 'Error al eliminar el producto', 'error': str(e)}), 500
 
 
