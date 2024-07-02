@@ -75,7 +75,7 @@ def delete_producto(id_product):
     prod = Producto.get_by_id(id_product)
     if not prod:
         return jsonify({'message': 'Producto inexistente'}), 404
-    prod.delete()
+    prod.delete_producto()
     return jsonify({'message': 'Producto eliminado'})
 
 
